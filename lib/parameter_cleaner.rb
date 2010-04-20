@@ -4,14 +4,14 @@ class ActionController::Base
   before_filter :pc_remove_angle_brackets_from_params
 
   class <<self
-    def do_not_escape_param(*names)
+    def do_not_clean_param(*names)
       names.each do |name|
-        pc_unescaped_params.push([*name].map{ |s| s.to_s })
+        pc_uncleaned_params.push([*name].map{ |s| s.to_s })
       end
     end
 
-    def pc_unescaped_params
-      @pc_unescaped_params ||= []
+    def pc_uncleaned_params
+      @pc_uncleaned_params ||= []
     end
   end
 
@@ -37,7 +37,7 @@ private
   def pc_remove_angle_brackets_from_value(value, hierarchy)
     if hierarchy.any?{ |k| k =~ /password/ }
       return value
-    elsif self.class.pc_unescaped_params.include?(hierarchy)
+    elsif self.class.pc_uncleaned_params.include?(hierarchy)
       return value
     else
       value.gsub(/<>/, "")

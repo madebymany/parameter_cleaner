@@ -3,8 +3,8 @@ require "parameter_cleaner"
 
 class ParameterCleaningTest < ActionController::TestCase
   class TestController < ActionController::Base
-    do_not_escape_param :unescaped
-    do_not_escape_param [:nested, :unescaped]
+    do_not_clean_param :uncleaned
+    do_not_clean_param [:nested, :uncleaned]
     layout nil
 
     def index
@@ -46,17 +46,17 @@ class ParameterCleaningTest < ActionController::TestCase
   end
 
   should "not remove <> from whitelisted field" do
-    get :index, :unescaped => "<><>"
-    assert_equal "<><>", params[:unescaped]
+    get :index, :uncleaned => "<><>"
+    assert_equal "<><>", params[:uncleaned]
   end
 
   should "not remove <> from whitelisted nested field" do
-    get :index, :nested => {:unescaped => "<><>"}
-    assert_equal "<><>", params[:nested][:unescaped]
+    get :index, :nested => {:uncleaned => "<><>"}
+    assert_equal "<><>", params[:nested][:uncleaned]
   end
 
   should "not remove <> from whitelisted array field" do
-    get :index, :unescaped => ["<><>"]
-    assert_equal ["<><>"], params[:unescaped]
+    get :index, :uncleaned => ["<><>"]
+    assert_equal ["<><>"], params[:uncleaned]
   end
 end

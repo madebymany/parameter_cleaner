@@ -18,18 +18,18 @@ For fields where you want to allow angle brackets, you can disable it on a
 parameter-by-parameter basis:
 
     class SomeController < ApplicationController
-      do_not_escape_param [:thing, :html_description]
+      do_not_clean_param [:thing, :html_description]
     end
 
 The array corresponds to the hash keys used to get to the parameter; there is
 no distinction between string parameters and array parameters.
 
-    Form parameter  |  do_not_escape_array
-    ----------------+---------------------
+    Form parameter  |  do_not_clean_param
+    ----------------+--------------------
     foo             |  [:foo] or :foo
     foo[bar]        |  [:foo, :bar]
     foo[bar][]      |  [:foo, :bar]
 
 You can specify multiple parameters in one line:
 
-    do_not_escape_param :foo, :bar, [:nested, :baz]
+    do_not_clean_param :foo, :bar, [:nested, :baz]
