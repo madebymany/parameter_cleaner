@@ -28,7 +28,7 @@ private
         pc_remove_angle_brackets_from_hash(value, h)
       when Array
         value.map!{ |v| pc_remove_angle_brackets_from_value(v, h) }
-      else
+      when String
         hash[key] = pc_remove_angle_brackets_from_value(value, h)
       end
     end
