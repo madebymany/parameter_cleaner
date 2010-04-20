@@ -63,6 +63,6 @@ class ParameterCleaningTest < ActionController::TestCase
   should "not try to clean uploaded files" do
     io = StringIO.new("<><>")
     get :index, :upload => io
-    assert_equal "<><>", io.read
+    assert_equal "<><>", params[:upload].read
   end
 end

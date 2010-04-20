@@ -28,19 +28,16 @@ private
         pc_remove_angle_brackets_from_hash(value, h)
       when Array
         value.map!{ |v| pc_remove_angle_brackets_from_value(v, h) }
-      when String
+      else
         hash[key] = pc_remove_angle_brackets_from_value(value, h)
       end
     end
   end
 
   def pc_remove_angle_brackets_from_value(value, hierarchy)
-    if hierarchy.any?{ |k| k =~ /password/ }
-      return value
-    elsif self.class.pc_uncleaned_params.include?(hierarchy)
-      return value
-    else
-      value.gsub(/<>/, "")
-    end
+    return value if hierarchy.any?{ |k| k =~ /password/ } ||
+                    self.class.pc_uncleaned_params.include?(hierarchy) ||
+                    !value.respond_to?(:gsub)
+    value.gsub(/<>/, "")
   end
 end
