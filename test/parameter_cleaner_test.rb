@@ -24,6 +24,12 @@ class ParameterCleaningTest < ActionController::TestCase
     end
   end
 
+  should "remove XSS attack vectors" do
+    get :index, :field => "blah '';!--\"<XSS>=&{()} blah"
+    assert_equal "blah '';!--\"XSS=&{()} blah", params[:field]
+  end
+
+
   should "remove <> from fields" do
     get :index, :field => "blah <> blah"
     assert_equal "blah  blah", params[:field]

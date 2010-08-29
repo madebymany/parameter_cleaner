@@ -38,6 +38,6 @@ private
     return value if hierarchy.any?{ |k| k =~ /password/ } ||
                     self.class.pc_uncleaned_params.include?(hierarchy) ||
                     !value.respond_to?(:gsub)
-    value.gsub(/<>/, "")
+    value.gsub(/[<>]/, "")
   end
 end
