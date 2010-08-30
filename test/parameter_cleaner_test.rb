@@ -31,13 +31,13 @@ class ParameterCleaningTest < ActionController::TestCase
 
 
   should "remove <> from fields" do
-    get :index, :field => "blah <> blah"
-    assert_equal "blah  blah", params[:field]
+    get :index, :field => "blah <foo> blah"
+    assert_equal "blah foo blah", params[:field]
   end
 
   should "remove <> from nested fields" do
-    get :index, :nested => { :field => "blah <> blah" }
-    assert_equal "blah  blah", params[:nested][:field]
+    get :index, :nested => { :field => "blah <bar> blah" }
+    assert_equal "blah bar blah", params[:nested][:field]
   end
 
   should "remove <> from array fields" do
